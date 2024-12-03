@@ -6,12 +6,15 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     if [[ "$distro" == "arch" || "$id_like" == "arch" ]]; then
        echo "Arch Linux Detected"
        sudo pacman -S --needed unace unrar zip unzip p7zip sharutils uudeview arj cabextract file-roller dtc xz python3-pip python3-full python2 python-is-python3 brotli lz4 gawk libmpack aria2
-       #aur=rar
+       # aur=rar
     else
        sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python3-pip python3-full python2 python-is-python3 brotli liblz4-tool gawk aria2
     fi
-    pip install backports.lzma protobuf pycrypto
+    pip install backports.lzma protobuf==3.20.3 pycrypto
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install protobuf xz brotli lz4 aria2
     pip install backports.lzma protobuf pycrypto
 fi
+
+# fix error
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
