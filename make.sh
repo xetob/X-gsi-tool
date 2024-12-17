@@ -161,21 +161,6 @@ fi
 $romsdir/$sourcever/$romtype/debloat.sh "$systemdir/system" 2>/dev/null
 $romsdir/$sourcever/$romtype/$romtypename/debloat.sh "$systemdir/system" 2>/dev/null
 
-# Resign to AOSP keys
-if [[ ! -e $romsdir/$sourcever/$romtype/$romtypename/DONTRESIGN ]]; then
-    if [[ ! -e $romsdir/$sourcever/$romtype/DONTRESIGN ]]; then
-        echo "Resigning to AOSP keys"
-        ispython2=`python -c 'import sys; print("%i" % (sys.hexversion<0x03000000))'`
-        if [ $ispython2 -eq 0 ]; then
-            python2=python2
-        else
-            python2=python
-        fi
-        $python2 $toolsdir/ROM_resigner/resign.py "$systemdir/system" $toolsdir/ROM_resigner/AOSP_security > $tempdir/resign.log
-        $prebuiltdir/resigned/make.sh "$systemdir/system" 2>/dev/null
-    fi
-fi
-
 # Start patching
 echo "Patching started..."
 $scriptsdir/fixsymlinks.sh "$systemdir/system" 2>/dev/null
